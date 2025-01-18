@@ -1,0 +1,108 @@
+# A Python Program Showcasing Key Features Including OOP
+
+# Importing Modules
+import math
+import random
+
+# Global variables
+APP_NAME = "Python Features Demo"
+
+# Functions (Procedural Programming)
+def greet_user(name):
+    print(f"Hello, {name}! Welcome to {APP_NAME}.")
+
+# Using built-in functions and control flow
+def calculate_circle_area(radius):
+    if radius < 0:
+        return "Invalid radius"
+    return math.pi * radius ** 2
+
+# List Comprehension and Lambda Functions
+def generate_random_squares(count):
+    return [lambda x=x: x**2 for x in random.sample(range(1, 101), count)]
+
+# Exception Handling
+def safe_divide(a, b):
+    try:
+        result = a / b
+    except ZeroDivisionError:
+        return "Cannot divide by zero"
+    except TypeError:
+        return "Invalid input type"
+    else:
+        return result
+
+# Object-Oriented Programming (OOP)
+class Animal:
+    def __init__(self, name, sound):
+        self.name = name
+        self.sound = sound
+
+    def make_sound(self):
+        return f"{self.name} says {self.sound}"
+
+# Inheritance and Polymorphism
+class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name, "Woof")
+        self.breed = breed
+
+    def make_sound(self):
+        return f"{self.name} the {self.breed} barks: {self.sound}!"
+
+# File Handling
+def write_message_to_file(filename, message):
+    with open(filename, 'w') as f:
+        f.write(message)
+
+# Decorators
+def log_function_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling function '{func.__name__}' with arguments {args} and {kwargs}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@log_function_call
+def add_numbers(a, b):
+    return a + b
+
+# Generator Function
+def fibonacci_sequence(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+# Main program to demonstrate all features
+def main():
+    # Greet User
+    greet_user("Alice")
+
+    # Calculate Circle Area
+    print("Area of circle with radius 5:", calculate_circle_area(5))
+
+    # Generate Random Squares
+    squares = generate_random_squares(5)
+    print("Random squares:", [square() for square in squares])
+
+    # Safe Division
+    print("Dividing 10 by 2:", safe_divide(10, 2))
+    print("Dividing 10 by 0:", safe_divide(10, 0))
+
+    # Object-Oriented Programming
+    dog = Dog("Buddy", "Golden Retriever")
+    print(dog.make_sound())
+
+    # Write to File
+    write_message_to_file("output.txt", "This is a message written to the file.")
+    print("Message written to 'output.txt'.")
+
+    # Decorator Example
+    print("Adding 3 and 4:", add_numbers(3, 4))
+
+    # Generator Example
+    print("First 10 Fibonacci numbers:", list(fibonacci_sequence(10)))
+
+# Entry Point
+if __name__ == "__main__":
+    main() 
