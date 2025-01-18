@@ -1,0 +1,64 @@
+# Importing the necessary libraries
+import pandas as pd         # For data manipulation and analysis
+import numpy as np          # For numerical computations
+import matplotlib.pyplot as plt  # For data visualization
+from sklearn.model_selection import train_test_split  # For splitting the dataset
+from sklearn.linear_model import LogisticRegression  # For creating a classification model
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report  # For evaluating the model
+
+# Step 1: Create a simple dataset
+# Simulating hours studied and pass/fail outcome
+data = {
+    'Hours Studied': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    'Pass/Fail': [0, 0, 0, 0, 1, 1, 1, 1, 1, 1]  # 0 = Fail, 1 = Pass
+}
+
+# Convert the dataset into a Pandas DataFrame
+df = pd.DataFrame(data)
+
+# Step 2: Visualize the dataset
+plt.scatter(df['Hours Studied'], df['Pass/Fail'], color='blue')
+plt.title('Hours Studied vs. Pass/Fail')
+plt.xlabel('Hours Studied')
+plt.ylabel('Pass/Fail (0 = Fail, 1 = Pass)')
+plt.grid(True)
+plt.show()
+
+# Step 3: Split the data into features (X) and target (y)
+X = df[['Hours Studied']]  # Features
+y = df['Pass/Fail']        # Target variable
+
+# Step 4: Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 5: Create and train the classification model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Step 6: Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Step 7: Evaluate the model
+accuracy = accuracy_score(y_test, y_pred)
+conf_matrix = confusion_matrix(y_test, y_pred)
+class_report = classification_report(y_test, y_pred)
+
+print("Model Evaluation Metrics:")
+print(f"Accuracy: {accuracy:.2f}")
+print("\nConfusion Matrix:")
+print(conf_matrix)
+print("\nClassification Report:")
+print(class_report)
+
+# Step 8: Visualize the classification decision boundary
+x_values = np.linspace(0, 12, 100).reshape(-1, 1)
+y_values = model.predict(x_values)
+
+plt.scatter(df['Hours Studied'], df['Pass/Fail'], color='blue', label='Actual Data')
+plt.plot(x_values, y_values, color='red', label='Decision Boundary')
+plt.title('Logistic Regression Model')
+plt.xlabel('Hours Studied')
+plt.ylabel('Pass/Fail (0 = Fail, 1 = Pass)')
+plt.legend()
+plt.grid(True)
+plt.show()
